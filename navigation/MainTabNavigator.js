@@ -1,26 +1,29 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
+import StateExample from '../screens/StateExample';
 import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import PropsExample from '../screens/PropsExample';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
-  default: {},
+  default: {}
 });
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    State: StateExample
   },
   config
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'State',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -30,14 +33,33 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
 HomeStack.path = '';
 
+const PropsStack = createStackNavigator(
+  {
+    Props: PropsExample
+  },
+  config
+);
+
+PropsStack.navigationOptions = {
+  tabBarLabel: 'Props',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-image' : 'md-image'}
+    />
+  )
+};
+
+PropsStack.path = '';
+
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: LinksScreen
   },
   config
 );
@@ -45,32 +67,19 @@ const LinksStack = createStackNavigator(
 LinksStack.navigationOptions = {
   tabBarLabel: 'Links',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+    />
+  )
 };
 
 LinksStack.path = '';
 
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-  },
-  config
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-SettingsStack.path = '';
-
 const tabNavigator = createBottomTabNavigator({
+  PropsStack,
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  LinksStack
 });
 
 tabNavigator.path = '';
