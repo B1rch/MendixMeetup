@@ -6,6 +6,7 @@ import {
 } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+import Basics from '../screens/Basics';
 import StateExample from '../screens/StateExample';
 import LinksScreen from '../screens/LinksScreen';
 import PropsExample from '../screens/PropsExample';
@@ -15,11 +16,49 @@ const config = Platform.select({
   default: {}
 });
 
+const defaultNavigationOptions = {
+  headerStyle: {
+    backgroundColor: '#FE7333'
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    fontFamily: 'Futura',
+    letterSpacing: 5
+  }
+};
+
+const BasicsStack = createStackNavigator(
+  {
+    Basics: Basics
+  },
+  {
+    defaultNavigationOptions,
+    config
+  }
+);
+
+BasicsStack.navigationOptions = {
+  tabBarLabel: 'Basics',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-code' : 'md-code'}
+    />
+  )
+};
+
+BasicsStack.path = '';
+
 const HomeStack = createStackNavigator(
   {
     State: StateExample
   },
-  config
+  {
+    defaultNavigationOptions,
+    config
+  }
 );
 
 HomeStack.navigationOptions = {
@@ -42,7 +81,10 @@ const PropsStack = createStackNavigator(
   {
     Props: PropsExample
   },
-  config
+  {
+    defaultNavigationOptions,
+    config
+  }
 );
 
 PropsStack.navigationOptions = {
@@ -61,7 +103,10 @@ const LinksStack = createStackNavigator(
   {
     Links: LinksScreen
   },
-  config
+  {
+    defaultNavigationOptions,
+    config
+  }
 );
 
 LinksStack.navigationOptions = {
@@ -77,6 +122,7 @@ LinksStack.navigationOptions = {
 LinksStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
+  BasicsStack,
   PropsStack,
   HomeStack,
   LinksStack
