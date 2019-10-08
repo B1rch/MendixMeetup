@@ -14,26 +14,28 @@ class MyTextClass extends React.Component {
     this.setState({});
   }
   render() {
-    return <Text>{this.text}</Text>;
+    return <Text {...this.props}>{this.text}</Text>;
   }
 }
 
 MyTextFunction = props => {
   let text = `I have mounted with a function`;
-  return <Text>{text}</Text>;
+  return <Text {...props}>{text}</Text>;
 };
 
 const Basics = () => {
   return (
-    <>
-      <View style={styles.container}>
-        <MyTextClass></MyTextClass>
-        <MyTextFunction></MyTextFunction>
+    <View style={styles.container}>
+      <View>
+        <MyTextClass style={styles.defaultText}></MyTextClass>
+        <MyTextFunction style={styles.defaultText}></MyTextFunction>
       </View>
-      <View style={styles.container}>
-        <Text>Two views using react fragment</Text>
+      <View>
+        <Text style={[styles.defaultText, styles.lightFont]}>
+          My color is overwritten, just like cascading
+        </Text>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -46,7 +48,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 64,
     paddingBottom: 64,
+    paddingStart: 24,
+    paddingEnd: 24,
+    justifyContent: 'space-evenly',
     backgroundColor: '#f5f5f5'
+  },
+  defaultText: {
+    fontSize: 24,
+    lineHeight: 32,
+    letterSpacing: 1.5,
+    color: '#041C26'
+  },
+  lightFont: {
+    color: '#537381'
   }
 });
 
